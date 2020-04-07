@@ -2,6 +2,7 @@
 import minimize_rbf as minrbf
 from create_mat import giveT 
 import numpy as np
+import sys
 np.random.seed()
 #############################################################
 #####################Might be changed########################
@@ -16,7 +17,7 @@ fixed = {}
 #############################################################
 #############################################################
 X = np.load('normalized.npy')
-T = giveT(X,3.)
+T = giveT(X,float(sys.argv[1]))
 mm = minrbf.minimize_rbf(time=T,path=X,free=free,fixed=fixed)
 minimiz = mm.minimize()
 print(minimiz[0])

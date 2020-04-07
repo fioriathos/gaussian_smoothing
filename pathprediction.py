@@ -29,7 +29,7 @@ if __name__=='__main__':
     dt = float(sys.argv[3])
     #laod submatrix
     X = np.load(submat)
-    T = giveT(X)
+    T = giveT(X,float(sys.argv[4]))
     der = []; path=[]; errpath=[]
     for k in range(T.shape[0]):
         tm,te,de = predict(T[k:k+1,:],X[k:k+1,:],param,step,dt)

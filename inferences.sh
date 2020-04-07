@@ -17,11 +17,11 @@
 #The variable $JOB_ID stores the ID number of your task.
 
 
-#load your required modules below
+# LOAD YOUR VIRTUAL ENVIRONMENT!
 #################################
 source /scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh
 ## The two lag means shold match at N=5000
-python inference.py 
+python inference.py dt_a 
 #export your required environment variables below
 #################################################
 
