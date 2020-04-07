@@ -28,7 +28,7 @@ if __name__=='__main__':
     X = give_nparray(df,sys.argv[2])
     XN = (X - np.nanmean(X))/(np.nanstd(X+1e-08))
     ## Save important files
-    df.groupby('cell')['time_sec'].first().to_csv('initial_times.csv')
+    df.groupby('cell')['time_sec'].first().to_csv('initial_times.csv',header=True)
     np.save('normalized.npy',XN)
     np.save('original.npy',X)
     np.save('names.npy',give_nparray(df,'cell'))

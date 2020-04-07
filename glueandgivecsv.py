@@ -38,11 +38,15 @@ if __name__=="__main__":
                         der.shape[1]-O.shape[1]))*np.nan),axis=1)
     T = giveT(der,step)
    #save into panda frame
+    df2 = pd.read_csv('initial_times.csv')
     df = pd.DataFrame(data={'cell':N.reshape(1,-1)[0].tolist(),\
-                        'time':T.reshape(1,-1)[0].tolist(),\
+                        'time_sec':T.reshape(1,-1)[0].tolist(),\
                         '{}_pred'.format(vn):path.reshape(1,-1)[0].tolist(),\
                         'err':errpat.reshape(1,-1)[0].tolist(),\
                         'd_{}_dt'.format(vn):der.reshape(1,-1)[0].tolist(),\
-                        '{}'.format(vn):O.reshape(1,-1)[0].tolist()})
+                        '{}_raw'.format(vn):O.reshape(1,-1)[0].tolist()})
+    for c in df.cell.unique():
+            df.loc[df['cell']==c,'time_sec'] =\
+            df.loc[df['cell']==c,'time_sec']*60+df2.loc[df2['cell']==c,'time_sec'].iloc[0]
     #dfin = df.dropna()
     df.to_csv('{}_ATHOS.csv'.format(vn))

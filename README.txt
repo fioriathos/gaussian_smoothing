@@ -3,10 +3,11 @@
 ###########################
 # Download git repo
 git clone https://github.com/fioriathos/gaussian_smoothing.git
-# enter folder 
+# enter folder
 cd gaussian_smoothing
 # Create python virtual env (this command will create a virtual environment folder ~/gaussian_smoothing/virtualenv/)
-python3 -m venv virtualenv
+# On the cluster I use Python/3.5.2-goolf-1.7.20
+python -m venv virtualenv
 # Activate virtual environemnt
 source virtualenv/bin/activate
 # Install all required packages
@@ -42,11 +43,14 @@ cat hypinfer_* > allhypinfer.txt
 - and SOBSTITUTE/UNCOMMENT them with
 touch allhypinfer.txt
 python inference.py $dt_a>>allhypinfer.txt
--2) 
+-2) cancel all the part between ##@@@ for the path prediction and uncomment the
+one between #$$$
 
 The file to execute is execute.sh where you have to specify
 -The path of the file to analyse
 -the variable we are interested in (gfp_nb,length_um,length_vtmvb,concentration,..)
+-dt_a the acquisition time (usually 3 min)
+# The following you can usually keep the default one
 -numarray is the number of time we parallely optimize the likelihood by
     starting from differents initial conditions [higer it is slower will be but
     potentially more precise]
@@ -66,8 +70,8 @@ the only outputfile will be
     -d_var_dt: the derivative of the variable of interest
     -var_pred: the prediction from GPy
     -err: the variance on the prediction
-    -var: the original input variable [every 3 min for MoMa]
-    -time: the new time step
+    -var_raw: the original input variable [every 3 min for MoMa]
+    -time_se: the new time step with the correct starting time
 -allhyperinfer.txt
     the file containing all the value of the minimization
 

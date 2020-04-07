@@ -1,10 +1,10 @@
 #!bin/bash
 #File to be analyzed
-file='path_of_file'
+file='stationary_small_sample.csv'
 #Variable we want to do the inference
-var='var_to_analyze'
+var='length_um'
 #Acquisition time in min dt usually 3min
-dt_a=3
+dt_a=12
 #Number of times hyperparameters are optimized
 #higher this number slower will be but more precise
 numarray=10
@@ -19,7 +19,7 @@ dt=0.1
 ############################################
 ######## SOBSTITUTE WITH YOUR VIRTUAL ENV
 #source /scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh
-source /Users/fiori/PHD/gaussian_smoothing/virtualenv/bin/activate
+source /scicore/home/nimwegen/fiori/to_del/gaussian_smoothing/virtualenv/bin/activate
 #from csv to matrix
 python create_mat.py $file $var
 echo 'matrix created'
@@ -42,8 +42,8 @@ cat hypinfer_* > allhypinfer.txt
 # Lines among simbols #$$$ have to be delete if we work locally
 #$$$
 #touch  allhypinfer.txt
-#for k in {1..$numarray};do
-#    python inference.py $dt_a & >> allhypinfer.txt
+#for k in {1..10};do
+#    python inference.py $dt_a >> allhypinfer.txt 2>&1 & 
 #done
 #wait
 #$$$
@@ -63,24 +63,29 @@ touch listofjobs.txt
 ##########  ON  CLUSTER ##########
 ################################
 # Lines among simbols #@@@ have to be delete if we work locally
-#@@@
+
+##@@@
 for k in $(ls subnromalized*);do
     cat pathprediction.sh | sed "s+submat+$k+g;s+step+$step+g;s+dt+$dt+g;s+dt_a+$dt_a+g"> runpathprediction.sh
     sbatch runpathprediction.sh >> listofjobs.txt
 done
-#@@@
+##@@@
+
 ################################
 ##########  LOCAL     ##########
 ################################
 
 # Lines among simbols #$$$ have to be delete if we work wiht cluster 
-#$$$
-for k in $(ls subnromalized*);do
-    python pathprediction.py $k $step $dt $dt_a >> listofjobs.txt &
-done
 
-wait
+##$$$
+
+#for k in $(ls subnromalized*);do
+#    python pathprediction.py $k $step $dt $dt_a >> listofjobs.txt 2>&1 &
+#done
+#wait
+
 #$$$
+
 ####------------------------------------###
 echo 'predict the paths...'
 #wait until all jobs are done
@@ -89,7 +94,8 @@ python checkjobfinish.py listofjobs.txt
 echo "almost done.."
 python glueandgivecsv.py $numproc $var $file $step
 #delete useless file
-#rm *.out
-#rm listofjobs.txt
-#rm *.npy
+rm *.out
+rm listofjobs.txt
+rm *.npy
+rm initial_times.csv
 echo "DONE! You can find the file $var _ATHOS.csv with all the data"
