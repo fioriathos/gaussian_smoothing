@@ -16,6 +16,7 @@ pip install -r requirements.txt
 go into gaussian_smooting/execute.sh and change
 source /scicore/../activatepython.sh with YOUR virtualenv e.g. 
 source ~/gaussian_smoothing/virtualenvironment/bin/activate
+# NB if you have modules to load before running the virtual environment you can edit the file activatepython.sh 
 # open checkjobfinish.py and change "YOURUSERNAME" with your scicore username
 - DEPENDING IF YOU WORK LOCALLY OR USING THE CLUSTER YOU HAVE TO CHANGE THE
   execute.sh FILE
