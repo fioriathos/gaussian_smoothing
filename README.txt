@@ -16,7 +16,7 @@ pip install -r requirements.txt
 go into gaussian_smooting/execute.sh and change
 source /scicore/../activatepython.sh with YOUR virtualenv e.g. 
 source ~/gaussian_smoothing/virtualenvironment/bin/activate
-
+# open checkjobfinish.py and change "YOURUSERNAME" with your scicore username
 - DEPENDING IF YOU WORK LOCALLY OR USING THE CLUSTER YOU HAVE TO CHANGE THE
   execute.sh FILE
 
@@ -45,16 +45,20 @@ touch allhypinfer.txt
 python inference.py $dt_a>>allhypinfer.txt
 -2) cancel all the part between ##@@@ for the path prediction and uncomment the
 one between #$$$
-
-The file to execute is execute.sh where you have to specify
+####################################################
+############# HOW TO RUN IT
+####################################################
+The file to execute is execute.sh (type source execute.sh) where you have to specify
 -The path of the file to analyse
--the variable we are interested in (gfp_nb,length_um,length_vtmvb,concentration,..)
+-the variable we are interested in
+    (gfp_nb,length_um,log_length..,length_vtmvb,concentration,..). It makes no
+    transformations to the variable
 -dt_a the acquisition time (usually 3 min)
 # The following you can usually keep the default one
--numarray is the number of time we parallely optimize the likelihood by
+-numarray=10 is the number of time we parallely optimize the likelihood by
     starting from differents initial conditions [higer it is slower will be but
     potentially more precise]
--numproc is the number of times we divide the initial matrix in sub matrices
+-numproc=10 is the number of times we divide the initial matrix in sub matrices
     [higher it is faster will be] rule of tumb: (total number of
     cells/numproc~10
 -step is the time step for the prediction. The input equals 3 [min] but we can
@@ -71,7 +75,27 @@ the only outputfile will be
     -var_pred: the prediction from GPy
     -err: the variance on the prediction
     -var_raw: the original input variable [every 3 min for MoMa]
-    -time_se: the new time step with the correct starting time
+    -time_sec: the new time step with the correct starting time
 -allhyperinfer.txt
     the file containing all the value of the minimization
-
+#######################
+## EXAMPLE
+#######################
+open execute.sh and change file_to_analyse with stationary_small_sample.csv
+(this is an example datafile already present in your directory). To analyse the
+length change var_to_analyse with length_moma. Since the acquisition time in
+this dataframe is 12 min change dt_a=3 with dt_a=12. In order to give
+predictions every minutes change step=$dt_a with step=1
+Save the file and run it i.e. type source execute.sh
+######################################
+######## FAQ
+######################################
+- Sometimes the installation of GPy cause some problems with the command 
+pip install -r requirements.txt
+if it is the case cancel the GPy=1.9.6 line in the requirements.txt file. Then
+run pip install -r requirements.txt (this is usually ok). Once completed you
+can install GPy trough 
+pip install GPY
+- Some problems have occured with the formatting of the files *.sh. If you
+  operate in a unix system this can be easily fixed by open all of them with VIM and
+  type ( :set ff=unix ). Then save and quit ( :wq  ).

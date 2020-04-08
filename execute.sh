@@ -1,10 +1,10 @@
 #!bin/bash
 #File to be analyzed
-file='stationary_small_sample.csv'
+file='file_to_analyse'
 #Variable we want to do the inference
-var='length_um'
+var='var_to_analyse'
 #Acquisition time in min dt usually 3min
-dt_a=12
+dt_a=3
 #Number of times hyperparameters are optimized
 #higher this number slower will be but more precise
 numarray=10
@@ -12,7 +12,7 @@ numarray=10
 # Higer this number faster will be
 numproc=11
 #Time intereval between predictions [min]
-step=1
+step=$dt_a
 #Dt for computing the derivative
 dt=0.1
 ############################################
@@ -66,7 +66,7 @@ touch listofjobs.txt
 
 ##@@@
 for k in $(ls subnromalized*);do
-    cat pathprediction.sh | sed "s+submat+$k+g;s+step+$step+g;s+dt+$dt+g;s+dt_a+$dt_a+g"> runpathprediction.sh
+    cat pathprediction.sh | sed "s+submat+$k+g;s+step+$step+g;s+dt_a+$dt_a+g;s+dt+$dt+g"> runpathprediction.sh
     sbatch runpathprediction.sh >> listofjobs.txt
 done
 ##@@@
