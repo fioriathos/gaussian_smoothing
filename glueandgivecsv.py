@@ -49,4 +49,4 @@ if __name__=="__main__":
             df.loc[df['cell']==c,'time_sec'] =\
             df.loc[df['cell']==c,'time_sec']*60+df2.loc[df2['cell']==c,'time_sec'].iloc[0]
     #dfin = df.dropna()
-    df.to_csv('{}_ATHOS.csv'.format(vn))
+    df.to_csv('{}_gaussian_smooth.csv'.format(vn))
