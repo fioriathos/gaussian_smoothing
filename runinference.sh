@@ -21,7 +21,7 @@
 #################################
 source /scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh
 ## The two lag means shold match at N=5000
-python inference.py 12 
+python inference.py 3 
 #export your required environment variables below
 #################################################
 

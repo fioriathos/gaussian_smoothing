@@ -15,11 +15,16 @@ numproc=11
 step=$dt_a
 #Dt for computing the derivative
 dt=0.1
+#Python virutal environment
+env='/scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh'
+#Scicore uname
+sciu='fiori'
+#Generate file with correct uname
+cat checkjobfinish.txt | sed "s+SCIU+$sciu+g">checkjobfinish.py
 ############################################
 ############################################
 ######## SOBSTITUTE WITH YOUR VIRTUAL ENV
-#source /scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh
-source /scicore/home/nimwegen/fiori/to_del/gaussian_smoothing/virtualenv/bin/activate
+source $env
 #from csv to matrix
 python create_mat.py $file $var
 echo 'matrix created'
@@ -30,7 +35,7 @@ echo 'matrix created'
 # inference of parameters to be done with array job
 # Lines among simbols #@@@ have to be delete if we work locally
 #@@@
-cat inferences.sh | sed "s+numarray+$numarray+g;s+dt_a+$dt_a+g" > runinference.sh
+cat inferences.sh | sed "s+numarray+$numarray+g;s+ENV+$env+g;s+dt_a+$dt_a+g" > runinference.sh
 echo 'run hyperparam optimization'
 sbatch --wait runinference.sh
 #print all results in one file
@@ -66,7 +71,7 @@ touch listofjobs.txt
 
 ##@@@
 for k in $(ls subnromalized*);do
-    cat pathprediction.sh | sed "s+submat+$k+g;s+step+$step+g;s+dt_a+$dt_a+g;s+dt+$dt+g"> runpathprediction.sh
+    cat pathprediction.sh | sed "s+submat+$k+g;s+ENV+$env+g;s+step+$step+g;s+dt_a+$dt_a+g;s+dt+$dt+g"> runpathprediction.sh
     sbatch runpathprediction.sh >> listofjobs.txt
 done
 ##@@@

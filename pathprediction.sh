@@ -21,7 +21,7 @@
 
 #ADD YOUR VIRTUAL ENVIRONMENT
 #################################
-source /scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh
+source ENV 
 python pathprediction.py submat step dt dt_a
 #export your required environment variables below
 #################################################

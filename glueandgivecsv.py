@@ -18,7 +18,7 @@ if __name__=="__main__":
     pwd = sys.argv[3] #pwd of file
     step = float(sys.argv[4]) #time step of prediction
     O = np.load('original.npy')
-    N = np.load('names.npy')
+    N = np.load('names.npy',allow_pickle=True)
     der = loadinlist(createname('D',nfiles))
     path = loadinlist(createname('X',nfiles))
     errpat = loadinlist(createname('XE',nfiles))
@@ -45,6 +45,7 @@ if __name__=="__main__":
                         'err':errpat.reshape(1,-1)[0].tolist(),\
                         'd_{}_dt'.format(vn):der.reshape(1,-1)[0].tolist(),\
                         '{}_raw'.format(vn):O.reshape(1,-1)[0].tolist()})
+    df = df.dropna()
     for c in df.cell.unique():
             df.loc[df['cell']==c,'time_sec'] =\
             df.loc[df['cell']==c,'time_sec']*60+df2.loc[df2['cell']==c,'time_sec'].iloc[0]

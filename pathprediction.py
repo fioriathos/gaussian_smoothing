@@ -7,7 +7,7 @@ def predict(T,X,param,step,dt):
     ker =GPy.kern.RBF(1,lengthscale=param['lengthscale'],\
                      variance=param['variance'])
     m = GPy.models.GPRegression(X=T,Y=X,kernel=ker,noise_var=param['gstds'])
-    newT = np.arange(min(T),max(T),step)[:,None]
+    newT = np.arange(min(T),max(T)+step,step)[:,None]
     Tm,Terr = m.predict_noiseless(newT)
     Tpt,_ = m.predict_noiseless(newT+dt)
     Tmt,_ = m.predict_noiseless(newT-dt)

@@ -19,10 +19,10 @@
 #The variable $JOB_ID stores the ID number of your task.
 
 
-#ADD YOUR VIRTUAL ENVIRONMENT
+#ADD YOUR VIRTUAL /scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.shIRONMENT
 #################################
-source /scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh
-python pathprediction.py subnromalized1.npy 1 0.1 0.1_a
+source /scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh 
+python pathprediction.py subnromalized9.npy 12 0.1 12
 #export your required environment variables below
 #################################################
 
