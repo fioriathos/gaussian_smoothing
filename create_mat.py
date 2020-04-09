@@ -24,7 +24,9 @@ def giveT(X,dt):
 if __name__=='__main__':
     import sys
     df = pd.read_csv(sys.argv[1])
-    df['length_vbmvt']=df['vertical_bottom']-df['vertical_top']
+    Te  = np.hstack(df.groupby('cell')['time_sec'].apply(lambda x:\
+                                                          np.diff(x)).values)
+    assert sum(Te!=T[0])==0, 'acquisition time not all the same!'
     X = give_nparray(df,sys.argv[2])
     XN = (X - np.nanmean(X))/(np.nanstd(X+1e-08))
     ## Save important files
