@@ -103,4 +103,4 @@ rm *.out
 rm listofjobs.txt
 rm *.npy
 rm initial_times.csv
-echo "DONE! You can find the file $var _ATHOS.csv with all the data"
+echo "DONE! You can find the file $var _gaussian_smooth.csv with all the data"
