@@ -1,21 +1,21 @@
 #!bin/bash
 #File to be analyzed
-file='shortinput.csv'
-expname='exported.csv'
+file='YOURFILE.csv'
+expname='EXPORTNAME.csv'
 #Variable we want to do the inference
-var='length_box'
+var='VARIABLE_NAME'
+#Scicore uname
+sciu='YOUR_SCICORE_NAME'
 #Number of times hyperparameters are optimized
 #higher this number slower will be but more precise
-numarray=2
+numarray=10
 #Number of separate process to predict paths
 # Higer this number faster will be
-numproc=4
+numproc=10
 #Time intereval between predictions [min]. If None equal to step size
 step=None
 #Python virutal environment
 env='/scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh'
-#Scicore uname
-sciu='fiori'
 #Generate file with correct uname
 cat checkjobfinish.txt | sed "s+SCIU+$sciu+g">checkjobfinish.py
 ############################################
