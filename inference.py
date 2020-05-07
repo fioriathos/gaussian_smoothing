@@ -22,5 +22,8 @@ fixed = {'gstds':1.5**2/var}
 X = np.load('normalized.npy')
 T = giveT(X,np.load('dt.npy'))
 mm = minrbf.minimize_rbf(time=T,path=X,free=free,fixed=fixed)
-minimiz = mm.minimize()
-print(minimiz[0])
+if free:
+    minimiz = mm.minimize()
+    print(minimiz[0])
+else:
+    np.save('parameters.npy',np.array([fixed['lengthscale'],fixed['variance'],fixed['gstds']]))
