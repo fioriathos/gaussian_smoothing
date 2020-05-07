@@ -13,8 +13,8 @@ for j in content:
         objective.append(float(j.replace('fun: ','')))
     if j[0:2] == 'su':
         succes.append(bool(j.replace('success: ','')))
-    if j[0:2] == 'x:':
-        params.append((j.replace('x: array(','').replace(')','')))
+    if j[0:2] == 'fx':
+        params.append((j.replace('fx: array(','').replace(')','')))
 params = [ast.literal_eval(j) for j in params]
 params = np.array(params)
 succes = np.array(succes)

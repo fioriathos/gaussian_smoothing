@@ -10,6 +10,6 @@ if __name__=='__main__':
     #from a large to many small subarray
     import sys
     X = np.load('normalized.npy')
-    X = row_slice (X,int(sys.argv[1]))
+    X = row_slice(X,int(sys.argv[1]))
     for i in range(int(sys.argv[1])):
         np.save('subnromalized{}.npy'.format(i),X[i])

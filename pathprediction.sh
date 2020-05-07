@@ -22,7 +22,7 @@
 #ADD YOUR VIRTUAL ENVIRONMENT
 #################################
 source ENV 
-python pathprediction.py submat step dt dt_a
+python pathprediction.py submat step 
 #export your required environment variables below
 #################################################
 

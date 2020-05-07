@@ -10,14 +10,17 @@ np.random.seed()
 #intialize the parameters
 init = np.random.uniform(1e-06,1,3)
 #the parameters we want to infer
-free = {'variance':init[0],'gstds':init[1],'lengthscale':init[2]}
+#free = {'variance':init[0],'gstds':init[1],'lengthscale':init[2]}
+free = {'variance':init[0],'lengthscale':init[2]}
 #the parameters we take fixed
 # NB! Data are normalized so parameters must be rescaled!
-fixed = {}
+O = np.load('original.npy')
+var = np.nanstd(O+1e-08)
+fixed = {'gstds':1.5**2/var}
 #############################################################
 #############################################################
 X = np.load('normalized.npy')
-T = giveT(X,float(sys.argv[1]))
+T = giveT(X,np.load('dt.npy'))
 mm = minrbf.minimize_rbf(time=T,path=X,free=free,fixed=fixed)
 minimiz = mm.minimize()
 print(minimiz[0])

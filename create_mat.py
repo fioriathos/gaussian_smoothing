@@ -34,3 +34,4 @@ if __name__=='__main__':
     np.save('normalized.npy',XN)
     np.save('original.npy',X)
     np.save('names.npy',give_nparray(df,'cell'))
+    np.save('dt.npy',Te[0]/60.)

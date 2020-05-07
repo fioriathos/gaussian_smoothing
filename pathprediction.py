@@ -1,6 +1,9 @@
 import GPy
 import numpy as np
 def predict(T,X,param,step,dt):
+    """Do prediction where X,T input array, param is max lik par, step is the
+    new stepsize in minutes for the output and dt the derivative dt in minutes.
+    Return prediction, error and derivative"""
     #do prediction even for derivative
     T = T[~np.isnan(T)][:,None]
     X = X[~np.isnan(X)][:,None]
@@ -24,15 +27,16 @@ if __name__=='__main__':
     param['variance']=par[1]
     param['gstds']=par[2]
     #step for the predicitons
-    step = float(sys.argv[2])
-    #delta tau for derivatives
-    dt = float(sys.argv[3])
+    if sys.argv[2]=='None':
+        step=np.load('dt.npy')
+    else:
+        step = float(sys.argv[2])
     #laod submatrix
     X = np.load(submat)
-    T = giveT(X,float(sys.argv[4]))
+    T = giveT(X,np.load('dt.npy'))
     der = []; path=[]; errpath=[]
     for k in range(T.shape[0]):
-        tm,te,de = predict(T[k:k+1,:],X[k:k+1,:],param,step,dt)
+        tm,te,de = predict(T[k:k+1,:],X[k:k+1,:],param,step,1e-08)
         path.append(tm.T); errpath.append(te.T); der.append(de.T)
     D = np.array(create_nan_array(der))
     X = np.array(create_nan_array(path))

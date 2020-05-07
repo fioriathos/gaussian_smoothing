@@ -111,6 +111,7 @@ class minimize_rbf(object):
         self.lengthscale = total_par[0]
         self.variance = total_par[1]
         self.gstds = total_par[2]
+        tmp['fx']=np.array([total_par[0],total_par[1],total_par[2]])
         return tmp,total_par,lik_grad
     @jit
     def row_slice(self, xt, nproc):

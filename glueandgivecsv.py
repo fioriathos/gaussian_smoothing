@@ -16,7 +16,12 @@ if __name__=="__main__":
     nfiles = int(sys.argv[1])
     vn = sys.argv[2] #name of variable
     pwd = sys.argv[3] #pwd of file
-    step = float(sys.argv[4]) #time step of prediction
+    #time step of prediction
+    print(sys.argv[4])
+    if sys.argv[4]=='None':
+        step=np.load('dt.npy')
+    else:
+        step = float(sys.argv[4]) 
     O = np.load('original.npy')
     N = np.load('names.npy',allow_pickle=True)
     der = loadinlist(createname('D',nfiles))
@@ -50,4 +55,4 @@ if __name__=="__main__":
             df.loc[df['cell']==c,'time_sec'] =\
             df.loc[df['cell']==c,'time_sec']*60+df2.loc[df2['cell']==c,'time_sec'].iloc[0]
     #dfin = df.dropna()
-    df.to_csv('{}_gaussian_smooth.csv'.format(vn))
+    df.to_csv('{}'.format(sys.argv[5]))

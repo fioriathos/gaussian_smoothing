@@ -1,20 +1,17 @@
 #!bin/bash
 #File to be analyzed
-file='file_to_analyse'
+file='shortinput.csv'
+expname='exported.csv'
 #Variable we want to do the inference
-var='var_to_analyse'
-#Acquisition time in min dt usually 3min
-dt_a=3
+var='length_box'
 #Number of times hyperparameters are optimized
 #higher this number slower will be but more precise
-numarray=10
+numarray=2
 #Number of separate process to predict paths
 # Higer this number faster will be
-numproc=11
-#Time intereval between predictions [min]
-step=$dt_a
-#Dt for computing the derivative
-dt=0.1
+numproc=4
+#Time intereval between predictions [min]. If None equal to step size
+step=None
 #Python virutal environment
 env='/scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh'
 #Scicore uname
@@ -71,7 +68,7 @@ touch listofjobs.txt
 
 ##@@@
 for k in $(ls subnromalized*);do
-    cat pathprediction.sh | sed "s+submat+$k+g;s+ENV+$env+g;s+step+$step+g;s+dt_a+$dt_a+g;s+dt+$dt+g"> runpathprediction.sh
+    cat pathprediction.sh | sed "s+submat+$k+g;s+ENV+$env+g;s+step+$step+g"> runpathprediction.sh
     sbatch runpathprediction.sh >> listofjobs.txt
 done
 ##@@@
@@ -97,7 +94,7 @@ echo 'predict the paths...'
 python checkjobfinish.py listofjobs.txt
 #glue the final csv
 echo "almost done.."
-python glueandgivecsv.py $numproc $var $file $step
+python glueandgivecsv.py $numproc $var $file $step $expname
 #delete useless file
 rm *.out
 rm listofjobs.txt
