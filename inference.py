@@ -11,12 +11,12 @@ np.random.seed()
 init = np.random.uniform(1e-06,1,3)
 #the parameters we want to infer
 #free = {'variance':init[0],'gstds':init[1],'lengthscale':init[2]}
-free = {'variance':init[0],'lengthscale':init[2]}
+free = {'variance':init[0],'lengthscale':init[2],'gstds':1.5**2/var}
 #the parameters we take fixed
 # NB! Data are normalized so parameters must be rescaled!
 O = np.load('original.npy')
 var = np.nanstd(O+1e-08)
-fixed = {'gstds':1.5**2/var}
+fixed = {}
 #############################################################
 #############################################################
 X = np.load('normalized.npy')
