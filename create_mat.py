@@ -24,14 +24,14 @@ def giveT(X,dt):
 if __name__=='__main__':
     import sys
     df = pd.read_csv(sys.argv[1])
-    Te  = np.hstack(df.groupby('cell')['time_sec'].apply(lambda x:\
-                                                          np.diff(x)).values)
-    assert sum(Te!=Te[0])==0, 'acquisition time not all the same!'
+    df = df.groupby('cell').filter(lambda x: x.shape[0]>2) # at least 3 data
     X = give_nparray(df,sys.argv[2])
-    XN = (X - np.nanmean(X))/(np.nanstd(X+1e-08))
+    T = give_nparray(df,'time_sec')/60**2
+    #XN = (X - np.nanmean(X,axis=1,keepdims=True))/(np.nanstd(X+1e-08,axis=1,keepdims=True))
+    XN = (X - np.nanmean(X,axis=1,keepdims=True))
     ## Save important files
     df.groupby('cell')['time_sec'].first().to_csv('initial_times.csv',header=True)
     np.save('normalized.npy',XN)
     np.save('original.npy',X)
     np.save('names.npy',give_nparray(df,'cell'))
-    np.save('dt.npy',Te[0]/60.)
+    np.save('times.npy',T)

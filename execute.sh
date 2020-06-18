@@ -12,8 +12,8 @@ numarray=10
 #Number of separate process to predict paths
 # Higer this number faster will be
 numproc=10
-#Time intereval between predictions [min]. If None equal to step size
-step=None
+#Number of cells in training set 
+ntrain=200
 #Python virutal environment
 env='/scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh'
 #Generate file with correct uname
@@ -32,7 +32,7 @@ echo 'matrix created'
 # inference of parameters to be done with array job
 # Lines among simbols #@@@ have to be delete if we work locally
 #@@@
-cat inferences.sh | sed "s+numarray+$numarray+g;s+ENV+$env+g;s+dt_a+$dt_a+g" > runinference.sh
+cat inferences.sh | sed "s+numarray+$numarray+g;s+ENV+$env+g;s+ntrain+$ntrain+g" > runinference.sh
 echo 'run hyperparam optimization'
 sbatch --wait runinference.sh
 #print all results in one file
@@ -67,8 +67,8 @@ touch listofjobs.txt
 # Lines among simbols #@@@ have to be delete if we work locally
 
 ##@@@
-for k in $(ls subnromalized*);do
-    cat pathprediction.sh | sed "s+submat+$k+g;s+ENV+$env+g;s+step+$step+g"> runpathprediction.sh
+for k in $(seq 0 $(($numproc-1)));do
+    cat pathprediction.sh | sed "s+submat+$k+g;s+ENV+$env+g"> runpathprediction.sh
     sbatch runpathprediction.sh >> listofjobs.txt
 done
 ##@@@
@@ -94,10 +94,10 @@ echo 'predict the paths...'
 python checkjobfinish.py listofjobs.txt
 #glue the final csv
 echo "almost done.."
-python glueandgivecsv.py $numproc $var $file $step $expname
+python glueandgivecsv.py $numproc $var $expname
 #delete useless file
-rm *.out
-rm listofjobs.txt
-rm *.npy
-rm initial_times.csv
+#rm *.out
+#rm listofjobs.txt
+#rm *.npy
+#rm initial_times.csv
 echo "DONE! You can find the file $var _gaussian_smooth.csv with all the data"

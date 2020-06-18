@@ -22,6 +22,7 @@ class gpy_wrapper_rbf(object):
         assert y.shape[1]==1
         t=t[~np.isnan(t)][:,None];y=y[~np.isnan(y)][:,None]
         ker = GPy.kern.RBF(1, variance=self.variance, lengthscale=self.lengthscale)
+        ker = ker + GPy.kern.Bias(input_dim=1)
         if self.gstds.ndim>1:
             #print ("here", type(gstds),gstds)
             assert t.shape==self.gstds.shape,"control gstds shape"
@@ -35,8 +36,8 @@ class gpy_wrapper_rbf(object):
         assert t.shape[1]==1,"tshape";assert path.shape[1]==1,"pshape"
         #Create the model
         mod= self.create_model(t=t,y=path)
-        dlen= mod.kern.lengthscale.gradient_full
-        dvar= mod.kern.variance.gradient_full
+        dlen= mod.kern.rbf.lengthscale.gradient_full
+        dvar= mod.kern.rbf.variance.gradient_full
         dg_stdS = mod.Gaussian_noise.gradient_full
         dg = -np.array((dlen,dvar,dg_stdS))# -1 since gradient of objective
         return np.append(dg,mod.objective_function())

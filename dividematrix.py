@@ -11,5 +11,8 @@ if __name__=='__main__':
     import sys
     X = np.load('normalized.npy')
     X = row_slice(X,int(sys.argv[1]))
+    T = np.load('times.npy')
+    T = row_slice(T,int(sys.argv[1]))
     for i in range(int(sys.argv[1])):
         np.save('subnromalized{}.npy'.format(i),X[i])
+        np.save('subtimes{}.npy'.format(i),T[i])

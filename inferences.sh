@@ -21,7 +21,7 @@
 #################################
 source ENV
 ## The two lag means shold match at N=5000
-python inference.py dt_a
+python inference.py ntrain
 #export your required environment variables below
 #################################################
 
