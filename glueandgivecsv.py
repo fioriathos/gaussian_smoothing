@@ -18,10 +18,11 @@ if __name__=="__main__":
     #time step of prediction
     O = np.load('original.npy')
     N = np.load('names.npy',allow_pickle=True)
+    T = np.load('times.npy')
     der = loadinlist(createname('D',nfiles))
     path = loadinlist(createname('X',nfiles))
     errpat = loadinlist(createname('XE',nfiles))
-    T = loadinlist(createname('T',nfiles))
+#    T = loadinlist(createname('T',nfiles))
     assert O.shape[0]==der.shape[0]
     # make every np array same shape
     N = np.repeat(N[:,:1],der.shape[1],axis=1)
@@ -29,6 +30,8 @@ if __name__=="__main__":
     for j in np.argwhere(isnan(der)):
         N[j[0],j[1]]=np.nan
     O = np.concatenate((O,np.zeros((O.shape[0],\
+                        der.shape[1]-O.shape[1]))*np.nan),axis=1)
+    T = np.concatenate((T,np.zeros((O.shape[0],\
                         der.shape[1]-O.shape[1]))*np.nan),axis=1)
    #save into panda frame
     df = pd.DataFrame(data={'cell':N.reshape(1,-1)[0].tolist(),\

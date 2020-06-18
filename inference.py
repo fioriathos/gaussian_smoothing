@@ -29,7 +29,7 @@ mm = minrbf.minimize_rbf(time=T,path=X,free=free,fixed=fixed)
 if free:
     minimiz = mm.minimize()
     # Objective per number of points
-    minimiz['0']['fun']=minimiz['0']['fun']/np.sum(~np.isnan(T.reshape(-1)))
+    minimiz[0]['fun']=minimiz[0]['fun']/np.sum(~np.isnan(T.reshape(-1)))
     print(minimiz[0])
 else:
     np.save('parameters.npy',np.array([fixed['lengthscale'],fixed['variance'],fixed['gstds']]))
