@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=hyperparaminference    #This is the name of your job
-#SBATCH --cpus-per-task=10                  #This is the number of cores reserved
-#SBATCH --mem-per-cpu=5G              #This is the memory reserved per core.
+#SBATCH --cpus-per-task=2                  #This is the number of cores reserved
+#SBATCH --mem-per-cpu=1G              #This is the memory reserved per core.
 
-#SBATCH --time=06:00:00        #This is the time that your task will run
-#SBATCH --qos=6hours #You will run in this queue
+#SBATCH --time=00:15:00        #This is the time that your task will run
+#SBATCH --qos=30min #You will run in this queue
 #SBATCH --output=hypinfer_%a.out
 #SBATCH --array=1-numarray
 
