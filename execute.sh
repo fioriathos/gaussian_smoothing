@@ -8,12 +8,12 @@ var='VARIABLE_NAME'
 sciu='YOUR_SCICORE_NAME'
 #Number of times hyperparameters are optimized
 #higher this number slower will be but more precise
-numarray=10
+numarray=40
 #Number of separate process to predict paths
 # Higer this number faster will be
 numproc=10
 #Number of cells in training set 
-ntrain=200
+ntrain=100
 #Python virutal environment
 env='/scicore/home/nimwegen/fiori/protein_production/mother_machine_inference_algo/activatepython.sh'
 #Generate file with correct uname
